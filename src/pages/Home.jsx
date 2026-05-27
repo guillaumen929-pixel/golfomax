@@ -8,6 +8,24 @@ import videoSrc from '../assets/golf-swing-scrub-60fps.mp4'
 import mahomesImg from '../assets/Mahomes_Team-Full-Swing-gs.webp'
 import barImg from '../assets/Untitled design (3).webp'
 
+function MobileVideo({ src }) {
+  const ref = useRef(null)
+  useEffect(() => {
+    const v = ref.current
+    if (!v) return
+    v.play().catch(() => {})
+  }, [])
+  return (
+    <video
+      ref={ref}
+      src={src}
+      autoPlay loop muted playsInline
+      preload="metadata"
+      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, zIndex: 0 }}
+    />
+  )
+}
+
 function VideoHero() {
   const { t } = useLang()
   const outerRef = useRef(null)
@@ -20,11 +38,9 @@ function VideoHero() {
     const outer = outerRef.current
     if (!v || !outer) return
 
-    // Hard-prevent any autoplay
     v.autoplay = false
     v.pause()
 
-    // If browser tries to play, stop it immediately
     const blockPlay = () => v.pause()
     v.addEventListener('play', blockPlay)
 
@@ -44,10 +60,9 @@ function VideoHero() {
       rafId = requestAnimationFrame(seek)
     }
 
-    // Attach scroll listener once metadata is ready (duration available)
     function setup() {
       v.pause()
-      seek() // snap to correct frame immediately
+      seek()
       window.addEventListener('scroll', onScroll, { passive: true })
     }
 
@@ -69,8 +84,7 @@ function VideoHero() {
   if (reducedMotion || isTouchDevice) {
     return (
       <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden', background: '#1C1C1E' }}>
-        <video src={videoSrc} autoPlay loop muted playsInline
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, zIndex: 0 }} />
+        <MobileVideo src={videoSrc} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(28,28,30,0.4) 0%, rgba(28,28,30,0.7) 50%, rgba(28,28,30,1) 100%)', zIndex: 1 }} />
         <HeroContent words={words} t={t} />
       </section>

@@ -1,15 +1,20 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
+
+const isPointerDevice =
+  typeof window !== 'undefined' &&
+  !window.matchMedia('(hover: none)').matches &&
+  !window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 export default function CustomCursor() {
+  if (!isPointerDevice) return null
+  return <CursorDom />
+}
+
+function CursorDom() {
   const dotRef = useRef(null)
   const ringRef = useRef(null)
-  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    if (window.matchMedia('(hover: none)').matches) return
-    setVisible(true)
-
     const dot = dotRef.current
     const ring = ringRef.current
     if (!dot || !ring) return
@@ -67,8 +72,6 @@ export default function CustomCursor() {
       })
     }
   }, [])
-
-  if (!visible) return null
 
   return (
     <>

@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Wrangler temp files (keep wrangler.jsonc itself tracked)
+.wrangler/
+
 # Large video assets — host externally (Cloudflare R2, YouTube, etc.)
 src/assets/*.mp4
 

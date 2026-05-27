@@ -9,9 +9,9 @@ export const fr = {
   },
   hero: {
     eyebrow: "L'expérience golf de Candiac",
-    word1: 'FRAPPE',
-    word2: 'BOIS',
-    word3: 'VIBRE',
+    word1: 'JOUE.',
+    word2: 'BOIS.',
+    word3: 'VIBRE.',
     sub: 'Simulateurs de golf intérieur, bar complet, sports en direct — de 8h à 3h · 7 jours sur 7',
     cta: 'Réserver une allée',
     ctaSub: 'Sans réservation bienvenu · 18+'

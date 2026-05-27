@@ -9,9 +9,9 @@ export const en = {
   },
   hero: {
     eyebrow: "Candiac's Premier Golf Experience",
-    word1: 'HIT',
-    word2: 'DRINK',
-    word3: 'VIBE',
+    word1: 'PLAY.',
+    word2: 'DRINK.',
+    word3: 'VIBE.',
     sub: 'Indoor golf simulators, full bar, live sports — open 8am to 3am · 7 days a week',
     cta: 'Book Your Lane',
     ctaSub: 'Walk-ins welcome · 18+'

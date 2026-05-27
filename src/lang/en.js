@@ -122,33 +122,28 @@ export const en = {
         { name: 'Private Bay', capacity: 'Up to 10 people', desc: 'Reserved for your group. Ideal for events.' }
       ]
     },
-    packages: {
+    pricing: {
       eyebrow: 'Pricing',
-      headline: 'Choose Your Package',
-      items: [
+      headline: 'Per Person · Per Round',
+      currentSeason: 'Current Season',
+      seasons: [
         {
-          name: '1 Hour',
-          price: '$35',
-          unit: '/ bay',
-          desc: 'Perfect for a quick round with friends.',
-          features: ['Up to 6 players', 'Full course access', 'Free course choice'],
-          featured: false
+          id: 'summer',
+          name: 'Summer',
+          dates: 'May 18 – Nov 18',
+          items: [
+            { label: '9 Holes', price: '$5.75', unit: '/ person' },
+            { label: '18 Holes', price: '$11.50', unit: '/ person' },
+          ]
         },
         {
-          name: '2 Hours',
-          price: '$60',
-          unit: '/ bay',
-          desc: 'Our most popular option.',
-          features: ['Up to 6 players', 'Full course access', 'Free course choice', 'Best value'],
-          featured: true
-        },
-        {
-          name: 'Half Day',
-          price: '$110',
-          unit: '/ bay',
-          desc: 'For serious golfers and groups.',
-          features: ['Up to 6 players', 'Full course access', 'Free course choice', 'Priority booking'],
-          featured: false
+          id: 'winter',
+          name: 'Winter',
+          dates: 'Nov 19 – May 17',
+          items: [
+            { label: '9 Holes', price: '$11.50', unit: '/ person' },
+            { label: '18 Holes', price: '$23.00', unit: '/ person' },
+          ]
         }
       ]
     },
@@ -176,8 +171,9 @@ export const en = {
       date: 'Preferred date',
       time: 'Preferred time',
       players: 'Number of players (max 6)',
-      package: 'Package',
-      packagePlaceholder: 'Select a package',
+      package: 'Round',
+      packagePlaceholder: 'Select a round',
+      packageOptions: ['9 Holes', '18 Holes'],
       message: 'Special requests (optional)',
       submit: 'Confirm Booking',
       success: "Booking received! We'll confirm by email shortly.",

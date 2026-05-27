@@ -24,7 +24,7 @@ function Field({ label, children }) {
 
 function BookingForm({ t }) {
   const f = t.simulateurs.form
-  const packages = t.simulateurs.packages.items
+  const packageOptions = t.simulateurs.form.packageOptions
 
   const [form, setForm] = useState({ name: '', email: '', phone: '', date: '', time: '', players: '2', package: '', message: '' })
   const [sent, setSent] = useState(false)
@@ -159,8 +159,8 @@ function BookingForm({ t }) {
               onFocus={e => e.target.style.borderColor = '#C1272D'}
               onBlur={e => e.target.style.borderColor = '#2E2E2E'}>
               <option value="" disabled>{f.packagePlaceholder}</option>
-              {packages.map(p => (
-                <option key={p.name} value={p.name}>{p.name} — {p.price} {p.unit}</option>
+              {packageOptions.map(p => (
+                <option key={p} value={p}>{p}</option>
               ))}
             </select>
           </Field>
@@ -195,6 +195,17 @@ function BookingForm({ t }) {
     </div>
   )
 }
+
+function getCurrentSeason() {
+  const now = new Date()
+  const m = now.getMonth() + 1
+  const d = now.getDate()
+  const afterMay18 = m > 5 || (m === 5 && d >= 18)
+  const beforeNov19 = m < 11 || (m === 11 && d <= 18)
+  return afterMay18 && beforeNov19 ? 'summer' : 'winter'
+}
+
+const currentSeason = getCurrentSeason()
 
 export default function Simulateurs() {
   const { t } = useLang()
@@ -271,58 +282,64 @@ export default function Simulateurs() {
         </div>
       </section>
 
-      {/* Packages */}
+      {/* Pricing */}
       <section id="packages" style={{ background: '#242424', padding: '6rem 1.5rem', scrollMarginTop: '5rem' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} style={{ marginBottom: '3rem' }}>
-            <motion.div variants={fadeUp}><SectionLabel>{s.packages.eyebrow}</SectionLabel></motion.div>
+            <motion.div variants={fadeUp}><SectionLabel>{s.pricing.eyebrow}</SectionLabel></motion.div>
             <motion.h2 variants={fadeUp} style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: '#fff', lineHeight: 1 }}>
-              {s.packages.headline}
+              {s.pricing.headline}
             </motion.h2>
           </motion.div>
           <motion.div
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', maxWidth: 720 }}
           >
-            {s.packages.items.map((pkg, i) => (
-              <motion.div
-                key={i}
-                variants={fadeUp}
-                whileHover={{ y: -4 }}
-                style={{
-                  background: pkg.featured ? '#C1272D' : '#2E2E2E',
-                  padding: '2.5rem 2rem',
-                  position: 'relative',
-                  transition: 'transform 0.2s',
-                }}
-              >
-                {pkg.featured && (
-                  <span style={{ position: 'absolute', top: -1, right: '1.5rem', background: '#fff', color: '#C1272D', fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.65rem', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '0.25rem 0.75rem' }}>
-                    Populaire
-                  </span>
-                )}
-                <div style={{ fontFamily: 'var(--font-display)', fontSize: '3.5rem', color: pkg.featured ? '#fff' : '#C1272D', lineHeight: 1 }}>
-                  {pkg.price}
-                </div>
-                <div style={{ color: pkg.featured ? 'rgba(255,255,255,0.6)' : '#555', fontFamily: 'var(--font-body)', fontSize: '0.8rem', marginBottom: '1rem' }}>
-                  {pkg.unit}
-                </div>
-                <h3 style={{ color: '#fff', fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '1.2rem', letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-                  {pkg.name}
-                </h3>
-                <p style={{ color: pkg.featured ? 'rgba(255,255,255,0.75)' : '#999', fontFamily: 'var(--font-body)', fontSize: '0.875rem', marginBottom: '1.5rem' }}>
-                  {pkg.desc}
-                </p>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                  {pkg.features.map((f, fi) => (
-                    <li key={fi} style={{ color: pkg.featured ? 'rgba(255,255,255,0.85)' : '#999', fontFamily: 'var(--font-body)', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <span style={{ color: pkg.featured ? '#fff' : '#C1272D', fontSize: '0.7rem' }}>✓</span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
+            {s.pricing.seasons.map((season) => {
+              const isCurrent = season.id === currentSeason
+              return (
+                <motion.div
+                  key={season.id}
+                  variants={fadeUp}
+                  whileHover={{ y: -4 }}
+                  style={{
+                    background: '#2E2E2E',
+                    borderTop: `3px solid ${isCurrent ? '#C1272D' : '#3E3E3E'}`,
+                    padding: '2.5rem 2rem',
+                    position: 'relative',
+                    transition: 'transform 0.2s',
+                  }}
+                >
+                  {isCurrent && (
+                    <span style={{ position: 'absolute', top: -1, right: '1.5rem', background: '#C1272D', color: '#fff', fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.6rem', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '0.25rem 0.75rem' }}>
+                      {s.pricing.currentSeason}
+                    </span>
+                  )}
+                  <div style={{ fontFamily: 'var(--font-display)', fontSize: '3rem', color: isCurrent ? '#C1272D' : '#fff', lineHeight: 1, marginBottom: '0.25rem' }}>
+                    {season.name}
+                  </div>
+                  <div style={{ color: '#555', fontFamily: 'var(--font-body)', fontSize: '0.8rem', letterSpacing: '0.05em', marginBottom: '2rem' }}>
+                    {season.dates}
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    {season.items.map((item, ii) => (
+                      <div key={ii}>
+                        {ii > 0 && <div style={{ height: 1, background: '#3E3E3E', margin: '1rem 0' }} />}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '1rem' }}>
+                          <span style={{ color: '#999', fontFamily: 'var(--font-heading)', fontWeight: 600, fontSize: '0.9rem', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                            {item.label}
+                          </span>
+                          <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                            <span style={{ color: '#fff', fontFamily: 'var(--font-display)', fontSize: '2rem', lineHeight: 1 }}>{item.price}</span>
+                            <span style={{ color: '#555', fontFamily: 'var(--font-body)', fontSize: '0.75rem', marginLeft: '0.4rem' }}>{item.unit}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              )
+            })}
           </motion.div>
         </div>
       </section>
@@ -377,13 +394,17 @@ export default function Simulateurs() {
             viewport={{ once: true }}
             style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem', paddingTop: '0.5rem' }}
           >
-            {s.packages.items.map((pkg, i) => (
-              <div key={i} style={{ borderLeft: `2px solid ${pkg.featured ? '#C1272D' : '#2E2E2E'}`, paddingLeft: '1.5rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.3rem' }}>
-                  <span style={{ color: '#fff', fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '1rem', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{pkg.name}</span>
-                  <span style={{ color: pkg.featured ? '#C1272D' : '#999', fontFamily: 'var(--font-display)', fontSize: '1.75rem' }}>{pkg.price}</span>
+            {s.pricing.seasons.map((season) => (
+              <div key={season.id} style={{ borderLeft: `2px solid ${season.id === currentSeason ? '#C1272D' : '#2E2E2E'}`, paddingLeft: '1.5rem' }}>
+                <div style={{ color: season.id === currentSeason ? '#C1272D' : '#fff', fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.9rem', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
+                  {season.name} <span style={{ color: '#555', fontWeight: 400, fontSize: '0.75rem', letterSpacing: 0, textTransform: 'none' }}>{season.dates}</span>
                 </div>
-                <p style={{ color: '#555', fontFamily: 'var(--font-body)', fontSize: '0.85rem' }}>{pkg.desc}</p>
+                {season.items.map((item, ii) => (
+                  <div key={ii} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.2rem' }}>
+                    <span style={{ color: '#999', fontFamily: 'var(--font-body)', fontSize: '0.85rem' }}>{item.label}</span>
+                    <span style={{ color: '#fff', fontFamily: 'var(--font-display)', fontSize: '1.2rem' }}>{item.price}</span>
+                  </div>
+                ))}
               </div>
             ))}
 

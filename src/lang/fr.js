@@ -122,33 +122,28 @@ export const fr = {
         { name: 'Allée Privée', capacity: 'Jusqu\'à 10 pers.', desc: 'Réservée à votre groupe. Idéale pour les événements.' }
       ]
     },
-    packages: {
+    pricing: {
       eyebrow: 'Tarifs',
-      headline: 'Choisissez votre forfait',
-      items: [
+      headline: 'Par personne · Par partie',
+      currentSeason: 'Saison en cours',
+      seasons: [
         {
-          name: '1 Heure',
-          price: '35$',
-          unit: '/ allée',
-          desc: 'Parfait pour une partie rapide entre amis.',
-          features: ["Jusqu'à 6 joueurs", 'Accès complet aux terrains', 'Choix du terrain libre'],
-          featured: false
+          id: 'summer',
+          name: 'Été',
+          dates: '18 mai – 18 nov',
+          items: [
+            { label: '9 trous', price: '5,75$', unit: '/ personne' },
+            { label: '18 trous', price: '11,50$', unit: '/ personne' },
+          ]
         },
         {
-          name: '2 Heures',
-          price: '60$',
-          unit: '/ allée',
-          desc: 'Notre option la plus populaire.',
-          features: ["Jusqu'à 6 joueurs", 'Accès complet aux terrains', 'Choix du terrain libre', 'Meilleur rapport qualité-prix'],
-          featured: true
-        },
-        {
-          name: 'Demi-journée',
-          price: '110$',
-          unit: '/ allée',
-          desc: 'Pour les golfeurs sérieux et les groupes.',
-          features: ["Jusqu'à 6 joueurs", 'Accès complet aux terrains', 'Choix du terrain libre', 'Réservation prioritaire'],
-          featured: false
+          id: 'winter',
+          name: 'Hiver',
+          dates: '19 nov – 17 mai',
+          items: [
+            { label: '9 trous', price: '11,50$', unit: '/ personne' },
+            { label: '18 trous', price: '23,00$', unit: '/ personne' },
+          ]
         }
       ]
     },
@@ -176,8 +171,9 @@ export const fr = {
       date: 'Date souhaitée',
       time: 'Heure préférée',
       players: 'Nombre de joueurs (max 6)',
-      package: 'Forfait',
-      packagePlaceholder: 'Sélectionnez un forfait',
+      package: 'Partie',
+      packagePlaceholder: 'Choisissez une partie',
+      packageOptions: ['9 trous', '18 trous'],
       message: 'Demandes spéciales (facultatif)',
       submit: 'Confirmer la réservation',
       success: 'Réservation reçue ! Nous vous confirmerons par courriel sous peu.',

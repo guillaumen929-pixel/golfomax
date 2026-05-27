@@ -17,18 +17,15 @@ function VideoHero() {
   useEffect(() => {
     const v = videoRef.current
     const outer = outerRef.current
-    if (!v) return
+    if (!v || !outer) return
 
-    v.muted = true
-    v.playsInline = true
-
-    if (reducedMotion) {
-      v.loop = true
-      v.play().catch(() => {})
-      return
-    }
-
+    // Hard-prevent any autoplay
+    v.autoplay = false
     v.pause()
+
+    // If browser tries to play, stop it immediately
+    const blockPlay = () => v.pause()
+    v.addEventListener('play', blockPlay)
 
     let rafId
 
@@ -46,21 +43,32 @@ function VideoHero() {
       rafId = requestAnimationFrame(seek)
     }
 
-    seek()
-    window.addEventListener('scroll', onScroll, { passive: true })
+    // Attach scroll listener once metadata is ready (duration available)
+    function setup() {
+      v.pause()
+      seek() // snap to correct frame immediately
+      window.addEventListener('scroll', onScroll, { passive: true })
+    }
+
+    if (v.readyState >= 1) {
+      setup()
+    } else {
+      v.addEventListener('loadedmetadata', setup, { once: true })
+    }
 
     return () => {
+      v.removeEventListener('play', blockPlay)
       window.removeEventListener('scroll', onScroll)
       cancelAnimationFrame(rafId)
     }
-  }, [reducedMotion])
+  }, [])
 
   const words = [t.hero.word1, t.hero.word2, t.hero.word3]
 
   if (reducedMotion) {
     return (
       <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden', background: '#1C1C1E' }}>
-        <video ref={videoRef} src={videoSrc} loop muted playsInline autoPlay
+        <video src={videoSrc} autoPlay loop muted playsInline
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, zIndex: 0 }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(28,28,30,0.4) 0%, rgba(28,28,30,0.7) 50%, rgba(28,28,30,1) 100%)', zIndex: 1 }} />
         <HeroContent words={words} t={t} />

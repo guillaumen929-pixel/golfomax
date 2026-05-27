@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { useLang } from '../../context/LangContext'
 import { navbarVariant, mobileMenuVariant } from '../../lib/animations'
-import logo from '../../assets/GolfoMax Logo Transparent.png'
+import logo from '../../assets/GolfoMax Logo Transparent.webp'
 
 export default function Navbar() {
   const { t, toggle } = useLang()

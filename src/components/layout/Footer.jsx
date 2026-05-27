@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useLang } from '../../context/LangContext'
-import logo from '../../assets/GolfoMax Logo Transparent.png'
+import logo from '../../assets/GolfoMax Logo Transparent.webp'
 
 function InstagramIcon({ size = 16 }) {
   return (

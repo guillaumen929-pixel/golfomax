@@ -3,8 +3,8 @@ import { useLang } from '../../context/LangContext'
 import { fadeUp, fadeIn, staggerContainer, viewport } from '../../lib/animations'
 import SectionLabel from '../ui/SectionLabel'
 import PlaceholderImage from '../ui/PlaceholderImage'
-import mahomesImg from '../../assets/Mahomes_Team-Full-Swing-gs.jpg'
-import barImg from '../../assets/Untitled design (3).png'
+import mahomesImg from '../../assets/Mahomes_Team-Full-Swing-gs.webp'
+import barImg from '../../assets/Untitled design (3).webp'
 
 export default function AtmosphereSection() {
   const { t } = useLang()

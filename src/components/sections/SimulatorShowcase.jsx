@@ -6,7 +6,7 @@ import { slideLeft, slideRight, viewport } from '../../lib/animations'
 import SectionLabel from '../ui/SectionLabel'
 import PlaceholderImage from '../ui/PlaceholderImage'
 import Button from '../ui/Button'
-import mahomesImg from '../../assets/Mahomes_Team-Full-Swing-gs.jpg'
+import mahomesImg from '../../assets/Mahomes_Team-Full-Swing-gs.webp'
 
 function Counter({ value, label }) {
   const ref = useRef(null)

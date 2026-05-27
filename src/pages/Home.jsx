@@ -5,8 +5,8 @@ import { useLang } from '../context/LangContext'
 import { fadeUp, staggerContainer, pageTransitionVariant } from '../lib/animations'
 import SectionLabel from '../components/ui/SectionLabel'
 import videoSrc from '../assets/golf-swing-scrub-60fps.mp4'
-import mahomesImg from '../assets/Mahomes_Team-Full-Swing-gs.jpg'
-import barImg from '../assets/Untitled design (3).png'
+import mahomesImg from '../assets/Mahomes_Team-Full-Swing-gs.webp'
+import barImg from '../assets/Untitled design (3).webp'
 
 function VideoHero() {
   const { t } = useLang()

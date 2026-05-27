@@ -4,8 +4,8 @@ import { motion } from 'framer-motion'
 import { useLang } from '../context/LangContext'
 import { fadeUp, staggerContainer, pageTransitionVariant } from '../lib/animations'
 import SectionLabel from '../components/ui/SectionLabel'
-import fullSwingLogo from '../assets/Untitled design (4).png'
-import jasonDayImg from '../assets/Jason-Day-Old-Course-gs.jpg'
+import fullSwingLogo from '../assets/Untitled design (4).webp'
+import jasonDayImg from '../assets/Jason-Day-Old-Course-gs.webp'
 
 // ── Replace MAKE_WEBHOOK_URL with your Make.com webhook URL ──────────────────
 const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/wshc40a9awx8sdeu4d4tkqyhlgq3y1j1'

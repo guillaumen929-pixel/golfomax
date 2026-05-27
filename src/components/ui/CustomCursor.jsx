@@ -1,12 +1,14 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function CustomCursor() {
   const dotRef = useRef(null)
   const ringRef = useRef(null)
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     if (window.matchMedia('(hover: none)').matches) return
+    setVisible(true)
 
     const dot = dotRef.current
     const ring = ringRef.current
@@ -65,6 +67,8 @@ export default function CustomCursor() {
       })
     }
   }, [])
+
+  if (!visible) return null
 
   return (
     <>

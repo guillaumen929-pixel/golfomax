@@ -13,6 +13,7 @@ function VideoHero() {
   const outerRef = useRef(null)
   const videoRef = useRef(null)
   const reducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches
 
   useEffect(() => {
     const v = videoRef.current
@@ -65,7 +66,7 @@ function VideoHero() {
 
   const words = [t.hero.word1, t.hero.word2, t.hero.word3]
 
-  if (reducedMotion) {
+  if (reducedMotion || isTouchDevice) {
     return (
       <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden', background: '#1C1C1E' }}>
         <video src={videoSrc} autoPlay loop muted playsInline

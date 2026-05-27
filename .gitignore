@@ -17,7 +17,7 @@ dist-ssr
 
 # Large video assets — host externally (Cloudflare R2, YouTube, etc.)
 src/assets/fullswing-demo.mp4
-src/assets/golf-swing-scrub-60fps.mp4
+src/assets/golf-swing-clip.mp4
 src/assets/golf-swing-scrub.mp4
 
 # Editor directories and files

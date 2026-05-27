@@ -100,20 +100,6 @@ export default function Footer() {
 
         <div style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid #2E2E2E', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
           <p style={{ color: '#555', fontFamily: 'var(--font-body)', fontSize: '0.75rem' }}>{t.footer.rights}</p>
-          <div style={{ display: 'flex', gap: '1.5rem' }}>
-            <Link to="#" style={{ color: '#555', fontFamily: 'var(--font-body)', fontSize: '0.75rem', textDecoration: 'none', transition: 'color 0.2s' }}
-              onMouseEnter={e => e.currentTarget.style.color = '#999'}
-              onMouseLeave={e => e.currentTarget.style.color = '#555'}
-            >
-              {t.footer.links.privacy}
-            </Link>
-            <Link to="#" style={{ color: '#555', fontFamily: 'var(--font-body)', fontSize: '0.75rem', textDecoration: 'none', transition: 'color 0.2s' }}
-              onMouseEnter={e => e.currentTarget.style.color = '#999'}
-              onMouseLeave={e => e.currentTarget.style.color = '#555'}
-            >
-              {t.footer.links.terms}
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

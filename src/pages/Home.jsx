@@ -11,56 +11,14 @@ import barImg from '../assets/Untitled design (3).png'
 function VideoHero() {
   const { t } = useLang()
   const outerRef = useRef(null)
-  const videoRef = useRef(null)
   const reducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-  useEffect(() => {
-    const v = videoRef.current
-    const outer = outerRef.current
-    if (!v) return
-
-    v.muted = true
-    v.playsInline = true
-
-    if (reducedMotion) {
-      v.loop = true
-      v.play().catch(() => {})
-      return
-    }
-
-    v.pause()
-
-    let rafId
-
-    function seek() {
-      if (!v.duration || !outer) return
-      const rect = outer.getBoundingClientRect()
-      const totalScrollable = outer.offsetHeight - window.innerHeight
-      const scrolled = -rect.top
-      const progress = Math.max(0, Math.min(1, scrolled / totalScrollable))
-      v.currentTime = progress * v.duration
-    }
-
-    function onScroll() {
-      cancelAnimationFrame(rafId)
-      rafId = requestAnimationFrame(seek)
-    }
-
-    seek()
-    window.addEventListener('scroll', onScroll, { passive: true })
-
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      cancelAnimationFrame(rafId)
-    }
-  }, [reducedMotion])
 
   const words = [t.hero.word1, t.hero.word2, t.hero.word3]
 
   if (reducedMotion) {
     return (
       <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden', background: '#1C1C1E' }}>
-        <video ref={videoRef} src={videoSrc} loop muted playsInline autoPlay
+        <video autoPlay loop muted playsInline src={videoSrc}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, zIndex: 0 }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(28,28,30,0.4) 0%, rgba(28,28,30,0.7) 50%, rgba(28,28,30,1) 100%)', zIndex: 1 }} />
         <HeroContent words={words} t={t} />
@@ -72,11 +30,11 @@ function VideoHero() {
     <section ref={outerRef} style={{ position: 'relative', height: '300vh', background: '#1C1C1E' }}>
       <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', display: 'flex', alignItems: 'center', isolation: 'isolate', transform: 'translateZ(0)' }}>
         <video
-          ref={videoRef}
-          src={videoSrc}
+          autoPlay
+          loop
           muted
           playsInline
-          preload="auto"
+          src={videoSrc}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4, zIndex: 0 }}
         />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(28,28,30,0.3) 0%, rgba(28,28,30,0.65) 50%, rgba(28,28,30,1) 100%)', zIndex: 1 }} />

@@ -98,9 +98,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid #2E2E2E', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
-          <p style={{ color: '#555', fontFamily: 'var(--font-body)', fontSize: '0.75rem' }}>{t.footer.rights}</p>
-        </div>
+        <div style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid #2E2E2E' }} />
       </div>
     </footer>
   )

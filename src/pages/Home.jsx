@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useLang } from '../context/LangContext'
@@ -10,19 +10,49 @@ import barImg from '../assets/Untitled design (3).png'
 function VideoHero() {
   const { t } = useLang()
   const outerRef = useRef(null)
+  const [parallaxY, setParallaxY] = useState(0)
+
+  useEffect(() => {
+    const outer = outerRef.current
+    if (!outer) return
+    let rafId
+    function onScroll() {
+      cancelAnimationFrame(rafId)
+      rafId = requestAnimationFrame(() => {
+        const rect = outer.getBoundingClientRect()
+        const scrolled = -rect.top
+        const totalScrollable = outer.offsetHeight - window.innerHeight
+        const progress = Math.max(0, Math.min(1, scrolled / totalScrollable))
+        // Image moves slower than scroll — classic parallax
+        setParallaxY(progress * 120)
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(rafId)
+    }
+  }, [])
 
   const words = [t.hero.word1, t.hero.word2, t.hero.word3]
 
   return (
-    <section ref={outerRef} style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden', background: '#1C1C1E' }}>
-      <img
-        src={mahomesImg}
-        alt="Golf simulator experience"
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4, zIndex: 0 }}
-      />
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(28,28,30,0.3) 0%, rgba(28,28,30,0.65) 50%, rgba(28,28,30,1) 100%)', zIndex: 1 }} />
-      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, background: '#C1272D', zIndex: 2 }} />
-      <HeroContent words={words} t={t} />
+    <section ref={outerRef} style={{ position: 'relative', height: '300vh', background: '#1C1C1E' }}>
+      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', display: 'flex', alignItems: 'center', isolation: 'isolate' }}>
+        <img
+          src={mahomesImg}
+          alt="Golf simulator experience"
+          style={{
+            position: 'absolute', inset: 0, width: '100%',
+            height: '120%', objectFit: 'cover', opacity: 0.45, zIndex: 0,
+            transform: `translateY(-${parallaxY}px)`,
+            willChange: 'transform',
+          }}
+        />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(28,28,30,0.3) 0%, rgba(28,28,30,0.65) 50%, rgba(28,28,30,1) 100%)', zIndex: 1 }} />
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, background: '#C1272D', zIndex: 2 }} />
+        <HeroContent words={words} t={t} />
+      </div>
     </section>
   )
 }

@@ -8,38 +8,19 @@ import videoSrc from '../assets/golf-swing-scrub-60fps.mp4'
 import mahomesImg from '../assets/Mahomes_Team-Full-Swing-gs.webp'
 import barImg from '../assets/Untitled design (3).webp'
 
-function MobileVideo({ src }) {
-  const ref = useRef(null)
-  useEffect(() => {
-    const v = ref.current
-    if (!v) return
-    v.play().catch(() => {})
-  }, [])
-  return (
-    <video
-      ref={ref}
-      src={src}
-      autoPlay loop muted playsInline
-      preload="metadata"
-      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, zIndex: 0 }}
-    />
-  )
-}
-
 function VideoHero() {
   const { t } = useLang()
   const outerRef = useRef(null)
   const videoRef = useRef(null)
   const reducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches
 
   useEffect(() => {
+    if (reducedMotion) return
     const v = videoRef.current
     const outer = outerRef.current
     if (!v || !outer) return
 
     v.autoplay = false
-    v.pause()
 
     const blockPlay = () => v.pause()
     v.addEventListener('play', blockPlay)
@@ -61,9 +42,16 @@ function VideoHero() {
     }
 
     function setup() {
-      v.pause()
-      seek()
-      window.addEventListener('scroll', onScroll, { passive: true })
+      // play→pause primes iOS Safari so currentTime can be set without user gesture
+      v.play().then(() => {
+        v.pause()
+        seek()
+        window.addEventListener('scroll', onScroll, { passive: true })
+      }).catch(() => {
+        v.pause()
+        seek()
+        window.addEventListener('scroll', onScroll, { passive: true })
+      })
     }
 
     if (v.readyState >= 1) {
@@ -81,10 +69,9 @@ function VideoHero() {
 
   const words = [t.hero.word1, t.hero.word2, t.hero.word3]
 
-  if (reducedMotion || isTouchDevice) {
+  if (reducedMotion) {
     return (
-      <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden', background: '#1C1C1E' }}>
-        <MobileVideo src={videoSrc} />
+      <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', background: '#1C1C1E' }}>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(28,28,30,0.4) 0%, rgba(28,28,30,0.7) 50%, rgba(28,28,30,1) 100%)', zIndex: 1 }} />
         <HeroContent words={words} t={t} />
       </section>

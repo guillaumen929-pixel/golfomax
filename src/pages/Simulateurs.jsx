@@ -271,42 +271,6 @@ export default function Simulateurs() {
         </div>
       </section>
 
-      {/* Bay cards */}
-      <section style={{ background: '#1C1C1E', padding: '6rem 1.5rem' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} style={{ marginBottom: '3rem' }}>
-            <motion.div variants={fadeUp}><SectionLabel>{s.bays.eyebrow}</SectionLabel></motion.div>
-            <motion.h2 variants={fadeUp} style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: '#fff', lineHeight: 1 }}>
-              {s.bays.headline}
-            </motion.h2>
-          </motion.div>
-          <motion.div
-            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1px', background: '#2E2E2E' }}
-          >
-            {s.bays.items.map((bay, i) => (
-              <motion.div
-                key={i}
-                variants={fadeUp}
-                whileHover={{ background: '#242424' }}
-                style={{ background: '#1C1C1E', padding: '2.5rem 2rem', transition: 'background 0.2s' }}
-              >
-                <div style={{ height: 3, background: '#C1272D', width: 40, marginBottom: '1.5rem' }} />
-                <h3 style={{ color: '#fff', fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '1.1rem', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
-                  {bay.name}
-                </h3>
-                <p style={{ color: '#C1272D', fontFamily: 'var(--font-heading)', fontSize: '0.75rem', letterSpacing: '0.12em', marginBottom: '1rem' }}>
-                  {bay.capacity}
-                </p>
-                <p style={{ color: '#999', fontFamily: 'var(--font-body)', fontSize: '0.875rem', lineHeight: 1.6 }}>
-                  {bay.desc}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
       {/* Packages */}
       <section id="packages" style={{ background: '#242424', padding: '6rem 1.5rem', scrollMarginTop: '5rem' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>

@@ -5,7 +5,6 @@ import { useLang } from '../context/LangContext'
 import { fadeUp, staggerContainer, pageTransitionVariant } from '../lib/animations'
 import SectionLabel from '../components/ui/SectionLabel'
 import fullSwingLogo from '../assets/Untitled design (4).png'
-import fullSwingDemo from '../assets/fullswing-demo.mp4'
 
 // ── Replace MAKE_WEBHOOK_URL with your Make.com webhook URL ──────────────────
 const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/wshc40a9awx8sdeu4d4tkqyhlgq3y1j1'
@@ -264,15 +263,8 @@ export default function Simulateurs() {
             whileInView={{ opacity: 1, x: 0, transition: { duration: 0.7 } }}
             viewport={{ once: true }}
           >
-            <div style={{ aspectRatio: '16/9', background: '#2E2E2E', position: 'relative', overflow: 'hidden' }}>
-              <video
-                src={fullSwingDemo}
-                autoPlay
-                muted
-                loop
-                playsInline
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
+            <div style={{ aspectRatio: '16/9', background: '#2E2E2E', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img src={fullSwingLogo} alt="Full Swing Simulator" style={{ width: '60%', opacity: 0.7, objectFit: 'contain' }} />
             </div>
           </motion.div>
         </div>

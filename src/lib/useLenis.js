@@ -5,6 +5,7 @@ let lenisInstance = null
 
 export function initLenis() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  if (window.innerWidth < 768) return
   lenisInstance = new Lenis({
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

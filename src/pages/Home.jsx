@@ -33,7 +33,8 @@ function VideoHero() {
       const totalScrollable = outer.offsetHeight - window.innerHeight
       const scrolled = -rect.top
       const progress = Math.max(0, Math.min(1, scrolled / totalScrollable))
-      v.currentTime = progress * v.duration
+      // map scroll [0→1] to video [15%→100%] so frame 0 (black) is never shown
+      v.currentTime = (0.15 + progress * 0.85) * v.duration
     }
 
     function onScroll() {
@@ -45,12 +46,11 @@ function VideoHero() {
       // play→pause primes iOS Safari so currentTime can be set without user gesture
       v.play().then(() => {
         v.pause()
-        // start at 15% so hero is never a black first frame
-        v.currentTime = v.duration * 0.15
+        seek()
         window.addEventListener('scroll', onScroll, { passive: true })
       }).catch(() => {
         v.pause()
-        v.currentTime = v.duration * 0.15
+        seek()
         window.addEventListener('scroll', onScroll, { passive: true })
       })
     }

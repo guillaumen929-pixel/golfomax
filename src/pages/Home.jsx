@@ -33,8 +33,7 @@ function VideoHero() {
       const totalScrollable = outer.offsetHeight - window.innerHeight
       const scrolled = -rect.top
       const progress = Math.max(0, Math.min(1, scrolled / totalScrollable))
-      // map scroll [0→1] to video [15%→100%] so frame 0 (black) is never shown
-      v.currentTime = (0.15 + progress * 0.85) * v.duration
+      v.currentTime = progress * v.duration
     }
 
     function onScroll() {
@@ -89,7 +88,7 @@ function VideoHero() {
 
   return (
     <section ref={outerRef} style={{ position: 'relative', height: '300vh', background: '#1C1C1E' }}>
-      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', display: 'flex', alignItems: 'center', isolation: 'isolate', transform: 'translateZ(0)', background: 'radial-gradient(ellipse 80% 60% at 50% 100%, rgba(193,39,45,0.18) 0%, #1C1C1E 70%)' }}>
+      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', display: 'flex', alignItems: 'center', isolation: 'isolate', transform: 'translateZ(0)' }}>
         <video
           ref={videoRef}
           src={videoSrc}

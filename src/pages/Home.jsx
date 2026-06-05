@@ -45,14 +45,12 @@ function VideoHero() {
       // play→pause primes iOS Safari so currentTime can be set without user gesture
       v.play().then(() => {
         v.pause()
-        // show a mid-action frame on load so hero is never blank
-        if (window.scrollY === 0) v.currentTime = v.duration * 0.15
-        seek()
+        // start at 15% so hero is never a black first frame
+        v.currentTime = v.duration * 0.15
         window.addEventListener('scroll', onScroll, { passive: true })
       }).catch(() => {
         v.pause()
-        if (window.scrollY === 0) v.currentTime = v.duration * 0.15
-        seek()
+        v.currentTime = v.duration * 0.15
         window.addEventListener('scroll', onScroll, { passive: true })
       })
     }

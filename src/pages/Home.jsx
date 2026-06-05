@@ -13,9 +13,10 @@ function VideoHero() {
   const outerRef = useRef(null)
   const videoRef = useRef(null)
   const reducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
 
   useEffect(() => {
-    if (reducedMotion) return
+    if (reducedMotion || isMobile) return
     const v = videoRef.current
     const outer = outerRef.current
     if (!v || !outer) return
@@ -69,10 +70,20 @@ function VideoHero() {
 
   const words = [t.hero.word1, t.hero.word2, t.hero.word3]
 
-  if (reducedMotion) {
+  if (reducedMotion || isMobile) {
     return (
       <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', background: '#1C1C1E' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(28,28,30,0.4) 0%, rgba(28,28,30,0.7) 50%, rgba(28,28,30,1) 100%)', zIndex: 1 }} />
+        <video
+          src={videoSrc}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4, zIndex: 0 }}
+        />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(28,28,30,0.3) 0%, rgba(28,28,30,0.65) 50%, rgba(28,28,30,1) 100%)', zIndex: 1 }} />
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, background: '#C1272D', zIndex: 2 }} />
         <HeroContent words={words} t={t} />
       </section>
     )

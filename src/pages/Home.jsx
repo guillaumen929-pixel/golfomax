@@ -33,7 +33,8 @@ function VideoHero() {
       const totalScrollable = outer.offsetHeight - window.innerHeight
       const scrolled = -rect.top
       const progress = Math.max(0, Math.min(1, scrolled / totalScrollable))
-      v.currentTime = progress * v.duration
+      // start at 15% so frame 0 (black) is never shown at page load
+      v.currentTime = (0.15 + progress * 0.85) * v.duration
     }
 
     function onScroll() {
@@ -42,13 +43,11 @@ function VideoHero() {
     }
 
     function setup() {
-      // play→pause primes iOS Safari so currentTime can be set without user gesture
       v.play().then(() => {
         v.pause()
         seek()
         window.addEventListener('scroll', onScroll, { passive: true })
       }).catch(() => {
-        v.pause()
         seek()
         window.addEventListener('scroll', onScroll, { passive: true })
       })
@@ -60,10 +59,16 @@ function VideoHero() {
       v.addEventListener('loadedmetadata', setup, { once: true })
     }
 
-    // iOS Safari requires a touch event to unlock video scrubbing
+    // iOS Safari: remove blockPlay during touch unlock so iOS accepts the play gesture
     const unlockOnTouch = () => {
-      v.play().then(() => v.pause()).catch(() => {})
-      document.removeEventListener('touchstart', unlockOnTouch)
+      v.removeEventListener('play', blockPlay)
+      v.play().then(() => {
+        v.pause()
+        v.addEventListener('play', blockPlay)
+        seek()
+      }).catch(() => {
+        v.addEventListener('play', blockPlay)
+      })
     }
     document.addEventListener('touchstart', unlockOnTouch, { once: true })
 
